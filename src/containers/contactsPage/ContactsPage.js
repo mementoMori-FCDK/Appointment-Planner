@@ -12,33 +12,37 @@ export const ContactsPage = (props) => {
   const [currEmail, setCurrEmail] = useState('');
   const [duplicate, setDuplicate] = useState(false);
 
-  useEffect(() =>{
-    const found = contacts.find(contact => contact.name === currName);
-    if(!found) setDuplicate(true);
-    else setDuplicate(false);
-  }, [currName, contacts, duplicate]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    /*
-    Add contact info and clear data
-    if the contact name is not a duplicate
-    */
+    console.log(duplicate);
+    if (!duplicate) {
+      addContact(currName, currPhone, currEmail);
+    }
+    setCurrName('');
+    setCurrPhone('');
+    setCurrEmail('');
   };
 
-  /*
-  Using hooks, check for contact name in the 
-  contacts array variable in props
-  */
+  useEffect(() =>{
+    const found = contacts.find(contact => contact.name === currName);
+    if(found === undefined) setDuplicate(false);
+    else setDuplicate(true);
+  }, [currName, contacts, duplicate]);
 
   return (
     <div>
       <section>
-        <h2>Add Contact</h2> 
+        <h2>
+          Add Contact
+          {duplicate ? " - (warning) This name is in the contacts list" : ""}
+        </h2>
+        <ContactForm  name={currName} phone={currPhone} email={currEmail} 
+        setName={setCurrName} setPhone={setCurrPhone} setEmail={setCurrEmail} handleSubmit={handleSubmit} />
       </section>
       <hr />
       <section>
         <h2>Contacts</h2>
+        <TileList tiles={contacts} />
       </section>
     </div>
   );
