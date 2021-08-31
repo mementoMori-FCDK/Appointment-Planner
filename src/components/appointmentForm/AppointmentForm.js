@@ -38,9 +38,9 @@ export const AppointmentForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type='text' name='title' onChange={changeTitle} value={title}></input>
-      <input type='date' name='date' min={getTodayString} onChange={changeDate} value={date}></input>
-      <input type='time' name='time' onChange={changeTime} value={time}></input>
+      <input type='text' name='title' onChange={changeTitle} value={title} required></input>
+      <input type='date' name='date' min={getTodayString} onChange={changeDate} value={date} required></input>
+      <input type='time' name='time' onChange={changeTime} value={time} required></input>
       <ContactPicker contacts={contacts} onChange={changeContact}/>
       <input type='submit' value='Add appointment'></input>
     </form>
